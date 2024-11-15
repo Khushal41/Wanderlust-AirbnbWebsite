@@ -9,8 +9,7 @@ const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema } = require("./schema.js");
-const { error } = require("console");
-
+const Review = require("./models/review.js")
 
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlustDataBase";
@@ -42,7 +41,7 @@ app.get("/", (req, res) => {
 const validateListing = (req, res, next) => {
     let(error) = listingSchema.validate(req.body);
     if (error) {
-        let errMsg = error.details.map((el) => .message).join(",");
+        let errMsg = error.details.map((el) => message).join(",");
         throw new ExpressError(400, errMsg);
     }
     else {
@@ -99,6 +98,19 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
     console.log(deletedListing);
     res.redirect("/listings");
 }));
+
+// Post Route Review 
+app.post("/listings/:id/reviews", async (req, res) => {
+    let listing = await Listing.findById(req.params.id);
+    let newReview = new Review(req.body.review);
+    listing.reviews.push(newReview);
+    
+    await newReview.save();
+    await listing.save();
+
+    console.log("New Review Saved");
+    res.send("New Review Saved");
+});
 
 // app.get("/testListing", async (req, res) => {
 //     let sampleListing = new Listing({
