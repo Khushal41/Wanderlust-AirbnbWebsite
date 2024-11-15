@@ -104,12 +104,11 @@ app.post("/listings/:id/reviews", async (req, res) => {
     let listing = await Listing.findById(req.params.id);
     let newReview = new Review(req.body.review);
     listing.reviews.push(newReview);
-    
+
     await newReview.save();
     await listing.save();
 
-    console.log("New Review Saved");
-    res.send("New Review Saved");
+    res.redirect(`/listings/${listing._id}`);
 });
 
 // app.get("/testListing", async (req, res) => {
