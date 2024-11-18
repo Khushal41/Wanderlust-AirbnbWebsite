@@ -22,10 +22,10 @@ const listingSchema = new Schema({
             ref: "Review",
         }
     ],
-    // owner: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "User",
-    // },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
     // geometry: {
     //     type: {
     //         type: String, // Don't do `{ location: { type: String } }`

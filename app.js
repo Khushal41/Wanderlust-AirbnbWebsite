@@ -20,10 +20,10 @@ const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlustDataBase";
 
 main()
     .then(() => {
-        console.log("connected to DB");
+        console.log("Connected to DB");
     })
     .catch((err) => {
-        console.log(err);
+        console.log("DB Connection Error:", err);
     });
 
 async function main() {
@@ -32,12 +32,10 @@ async function main() {
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.engine("ejs", ejsMate);
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-app.engine("ejs", ejsMate);
-app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, "/public")));
-app.use(express.urlencoded({ extended: true }));
 
 const sessionOptions = {
     secret: "mysupersecretcode",
@@ -49,20 +47,6 @@ const sessionOptions = {
         httpOnly: true,
     },
 };
-
-
-app.get("/", (req, res) => {
-    res.send("Hi, I am root");
-});
-
-// app.get("/demouser", async (req, res) => {
-//     let fakeUser = new User({
-//         email: "student@gmail.com",
-//         username: "delta-student",
-//     });
-//     let registeredUser = await User.register(fakeUser, "helloworld");
-//     res.send(registeredUser);
-// })
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -81,18 +65,21 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get("/", (req, res) => {
+    res.send("Hi, I am root");
+});
+
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
 
 app.all("*", (req, res, next) => {
-    next(new ExpressError(404, "Page not Found!"));
+    next(new ExpressError(404, "Page Not Found!"));
 });
 
 app.use((err, req, res, next) => {
     const { statusCode = 500, message = "Something Went Wrong!" } = err;
     res.status(statusCode).render("error.ejs", { message });
-    next();
 });
 
 app.listen(port, () => {
