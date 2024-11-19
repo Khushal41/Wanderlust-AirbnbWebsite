@@ -20,13 +20,24 @@ async function main() {
 const initDB = async () => {
     try {
         await Listing.deleteMany({});
-        const modifiedData = initData.data.map((obj) => ({
+        initData.data = initData.data.map((obj) => ({
             ...obj,
             owner: "6739d67b85d31617bee70f50",
         }));
-        await Listing.insertMany(modifiedData);
+        await Listing.insertMany(initData.data);
         console.log("Data was initialized");
-    } catch (error) {
+    }
+    catch (error) {
         console.error("Error initializing data:", error);
     }
 };
+
+
+// const modifiedData = initData.data.map((obj) => ({
+//     ...obj,
+//     owner: "6739d67b85d31617bee70f50",
+// }));
+
+// } catch (error) {
+//     console.error("Error initializing data:", error);
+// }
