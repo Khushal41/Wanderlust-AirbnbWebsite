@@ -8,7 +8,7 @@
         </div>
 
         <div class="card col-6 offset-3 show-card listing-card">
-            <img src="<%= listing.image.url%>" class="card-img-top show-img" alt="listing_image" />
+            <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image" />
 
             <div class="card-body">
                 <p class="card-text">
@@ -74,7 +74,8 @@
                                 <% for (review of listing.reviews) { %>
                                     <div class="card col-5 ms-3 mb-3">
                                         <div class="card-body">
-                                            <h5 class="card-title">@review.auther.username</review></h5>
+                                            <h5 class="card-title">@review.auther.username</review>
+                                            </h5>
                                             <p class="card-text">
                                                 <%= review.comment %>
                                             </p>
