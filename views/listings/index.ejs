@@ -1,11 +1,10 @@
 <% layout('/layouts/boilerplate.ejs') -%>
-<%= success %>
     <h3>All Listings</h3>
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
         <% for(let listing of allListings) { %>
             <a href="/listings/<%= listing._id %>" class="listing-link">
                 <div class="card col listing-card">
-                    <img style="height: 20rem;" src="<%= listing.image.url %>" class="card-img-top" alt="listing_image">
+                    <img style="height: 20rem;" src="<%= listing.image %>" class="card-img-top" alt="listing_image">
 
                     <div class="card-img-overlay">
                         <!-- You can add overlay content here if needed -->
