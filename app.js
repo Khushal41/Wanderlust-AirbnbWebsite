@@ -22,7 +22,7 @@ const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const { log, error } = require("console");
 
-// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlustDataBase";
+
 const dbUrl = process.env.ATLASDB_URL;
 
 main()
